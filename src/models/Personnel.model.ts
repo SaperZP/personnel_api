@@ -35,6 +35,7 @@ const personnelSchema = new Schema<IPersonnel>({
     type: String,
     required: [true, "Password is required"],
     trim: true,
+    select: false
   },
   firstName: {
     type: String,
