@@ -1,7 +1,25 @@
 import {model, Schema} from "mongoose";
 import {hash, genSalt, compare} from "bcryptjs";
 
-const personnelSchema = new Schema({
+export interface IPersonnel extends Document {
+  departmentId: Schema.Types.ObjectId;
+  username: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  email: string;
+  title: string;
+  salary: number;
+  description?: string;
+  isActive: boolean;
+  isAdmin: boolean;
+  isLead: boolean;
+  startedAt: Date;
+  checkPassword(enteredPassword: string): Promise<boolean>;
+}
+
+const personnelSchema = new Schema<IPersonnel>({
   departmentId: {
     type: Schema.Types.ObjectId,
     ref: "Department",

@@ -1,12 +1,14 @@
 import express from "express";
+import "express-async-errors"; //MUST, MUST, MUST be here!!! Right after importing express!!!
 import "colors";
-import {homePath} from "./controllers/home.controller";
 import {PORT, HOST, SECRET_KEY} from "./config/environment";
 import db from "./config/db";
+import cookieSession from "cookie-session";
+import {homePath} from "./controllers/home.controller";
 import departmentRoutes from "./routes/department.routes";
 import personnelRoutes from "./routes/personnel.routes";
 import authRoutes from "./routes/auth.routes";
-import cookieSession from "cookie-session";
+import {errorHandler} from "./midlewares/errorHandler";
 
 
 const startServer = async () => {
@@ -22,6 +24,8 @@ const startServer = async () => {
   app.use('/auth', authRoutes);
   app.use('/departments', departmentRoutes);
   app.use('/personnels', personnelRoutes);
+
+  app.use('/', errorHandler);
 
   app.listen(port, host, () => {
     console.log(`Server is ready at http://${HOST}:${PORT}`.green);
