@@ -16,6 +16,7 @@ export interface IPersonnel extends Document {
   isAdmin: boolean;
   isLead: boolean;
   startedAt: Date;
+
   checkPassword(enteredPassword: string): Promise<boolean>;
 }
 
@@ -35,7 +36,6 @@ const personnelSchema = new Schema<IPersonnel>({
     type: String,
     required: [true, "Password is required"],
     trim: true,
-    select: false
   },
   firstName: {
     type: String,
@@ -53,7 +53,12 @@ const personnelSchema = new Schema<IPersonnel>({
     trim: true,
     match: [
       /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/g,
-      "Please enter a valid phone number"
+      "Please enter a valid phone number: " +
+      "123-456-7890 or " +
+      "(123) 456-7890 or " +
+      "123.456.7890 or " +
+      "+1 123-456-7890 or " +
+      "+12 (123) 456-7890"
     ],
   },
   email: {

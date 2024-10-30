@@ -18,7 +18,7 @@ const startServer = async () => {
 
   await db();
   app.use(express.json());
-  app.use(cookieSession({secret: SECRET_KEY}))
+  app.use(cookieSession({secret: SECRET_KEY, maxAge: 1000*60*15}))
 
   app.get('/', homePath);
   app.use('/auth', authRoutes);
