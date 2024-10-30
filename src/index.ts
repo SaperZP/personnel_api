@@ -9,6 +9,7 @@ import departmentRoutes from "./routes/department.routes";
 import personnelRoutes from "./routes/personnel.routes";
 import authRoutes from "./routes/auth.routes";
 import {errorHandler} from "./midlewares/errorHandler";
+import log from "./midlewares/logger";
 
 
 const startServer = async () => {
@@ -18,7 +19,8 @@ const startServer = async () => {
 
   await db();
   app.use(express.json());
-  app.use(cookieSession({secret: SECRET_KEY, maxAge: 1000*60*15}))
+  app.use(cookieSession({secret: SECRET_KEY, maxAge: 1000*60*15}));
+  app.use(log);
 
   app.get('/', homePath);
   app.use('/auth', authRoutes);
