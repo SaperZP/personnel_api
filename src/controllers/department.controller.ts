@@ -2,12 +2,11 @@ import {Request, Response} from 'express';
 import DepartmentModel from "../models/Department.model";
 
 const listDepartments = async (req: Request, res: Response) => {
-  const data = await DepartmentModel.find({});
-
+  const data = await res.getModelList(DepartmentModel)
   res.status(200).send({
     error: false,
     data,
-    count: data.length
+    details: await res.getModelListDetails(DepartmentModel)
   })
 }
 

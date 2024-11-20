@@ -10,6 +10,8 @@ import personnelRoutes from "./routes/personnel.routes";
 import authRoutes from "./routes/auth.routes";
 import {errorHandler} from "./midlewares/errorHandler";
 import log from "./midlewares/logger";
+import {isAuth} from "./midlewares/isAuth";
+import {query} from "./midlewares/query";
 
 
 const startServer = async () => {
@@ -18,9 +20,12 @@ const startServer = async () => {
   const host = process.env?.HOST || "127.0.0.1";
 
   await db();
+
+  app.use(log);
   app.use(express.json());
   app.use(cookieSession({secret: SECRET_KEY, maxAge: 1000*60*15}));
-  app.use(log);
+  app.use(isAuth);
+  app.use(query);
 
   app.get('/', homePath);
   app.use('/auth', authRoutes);

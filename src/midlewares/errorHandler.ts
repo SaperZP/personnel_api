@@ -2,12 +2,12 @@ import {Request, Response, NextFunction} from 'express';
 import mongoose from 'mongoose';
 import ErrorResponse from "../helpers/ErrorResponse";
 
-export const errorHandler = (err: Error | mongoose.Error, req: Request, res: Response, next: NextFunction) => {
+export const errorHandler = (
+    err: Error | mongoose.Error,
+    req: Request,
+    res: Response,
+    next: NextFunction) => {
   let error = new ErrorResponse(500, err.message || 'Server Error');
-
-  console.log(err.message);
-  console.log(err.stack);
-
 
   // Mongoose bad ObjectId
   if (err instanceof mongoose.Error.CastError) {
