@@ -1,6 +1,10 @@
 import {model, Schema} from 'mongoose';
 
-const departmentSchema = new Schema({
+export interface Department extends Document {
+  name: string;
+}
+
+const departmentSchema = new Schema<Department>({
   name: {
     type: String,
     required: true,

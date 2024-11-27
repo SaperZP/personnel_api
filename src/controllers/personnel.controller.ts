@@ -19,12 +19,10 @@ const listPersonnel = async (req: Request, res: Response) => {
   }
 
   if (req.user?.isLead || req.user?.isAdmin) {
-    const data = await PersonnelModel.find();
-
     res.status(200).send({
       error: false,
       data,
-      count: data.length
+      details: await res.getModelListDetails(PersonnelModel)
     })
 
   } else {

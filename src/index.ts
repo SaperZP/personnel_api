@@ -12,6 +12,7 @@ import {errorHandler} from "./midlewares/errorHandler";
 import log from "./midlewares/logger";
 import {isAuth} from "./midlewares/isAuth";
 import {query} from "./midlewares/query";
+import cors from 'cors';
 
 
 const startServer = async () => {
@@ -23,6 +24,7 @@ const startServer = async () => {
 
   app.use(log);
   app.use(express.json());
+  app.use(cors());
   app.use(cookieSession({secret: SECRET_KEY, maxAge: 1000*60*15}));
   app.use(isAuth);
   app.use(query);

@@ -1,9 +1,9 @@
 import {NextFunction, Request, Response} from "express";
 import {Document, FilterQuery, Model, PopulateOptions, SortOrder} from "mongoose";
 import isValidObject from "../helpers/isValidObject";
+import {PAGE_SIZE} from "../config/environment";
 
 export const query = async (req: Request, res: Response, next: NextFunction) => {
-  const DEFAULT_PAGE_SIZE = 20;
 
   // Filter
   const filter: Record<string, any> = isValidObject(req.query?.filter)
@@ -35,9 +35,16 @@ export const query = async (req: Request, res: Response, next: NextFunction) => 
   }
 
   // Pagination
-  const limit = Math.max(Number(req.query?.limit) || DEFAULT_PAGE_SIZE, 1);
-  const page = Math.max(Number(req.query?.page) || 1, 1) - 1;
-  const skip = Math.max(Number(req.query?.skip) || page * limit, 0);
+  let limit = Number(req.query?.limit);
+  limit = limit>0 ? limit: Number(PAGE_SIZE) || 20
+  // Page
+  // URL?page=2&limit=5
+  let page = Number(req.query?.page)
+  page= page>0 ? (page-1) : 0
+
+  // Skip
+  let skip = Number(req.query?.skip)
+  skip = skip>0 ? skip:(page*limit)
 
   // Custom Methods
   res.getModelList = async function <T extends Document>(
@@ -74,7 +81,7 @@ export const query = async (req: Request, res: Response, next: NextFunction) => 
       search,
       sort,
       limit,
-      pages: total > 0
+      pages: data.length > limit
           ? {
             previous: page > 0 ? page : false,
             current: page + 1,
