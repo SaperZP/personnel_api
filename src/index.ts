@@ -18,7 +18,7 @@ import cors from 'cors';
 const startServer = async () => {
   const app = express();
   const port = Number(PORT) || 3000;
-  const host = process.env?.HOST || "127.0.0.1";
+  const host = process.env?.HOST || "0.0.0.0";
 
   await db();
 

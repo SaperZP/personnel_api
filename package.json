@@ -1,12 +1,13 @@
 {
   "name": "personnel_api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Personnel management API built with Express and MongoDB",
   "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
     "build": "tsc",
     "dev": "nodemon",
+    "prestart": "npm run build",
     "seeder:delete": "ts-node seeder.ts -d",
     "seeder:import": "ts-node seeder.ts -i"
   },
@@ -33,6 +34,9 @@
     "nodemon": "^3.1.7",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": "22.x"
   },
   "private": true
 }

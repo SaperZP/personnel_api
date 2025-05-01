@@ -1,0 +1,16 @@
+# Ignore node modules and build output
+node_modules
+dist
+out-tsc
+
+# Ignore environment files and secrets
+.env
+
+# Ignore logs and OS junk
+logs
+*.log
+.DS_Store
+
+# IDE settings
+.pnp
+.pnp.js
