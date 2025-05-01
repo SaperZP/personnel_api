@@ -1,7 +1,7 @@
 import { ParsedQs } from "qs";
 
 function isValidObject(
-    search: string | ParsedQs | string[] | ParsedQs[] | undefined
+    search: string | ParsedQs | (string | ParsedQs)[] | undefined
 ): search is Record<string, string> {
   return (
       typeof search === "object" &&
